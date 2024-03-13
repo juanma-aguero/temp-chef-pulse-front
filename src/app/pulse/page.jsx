@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import IngredientTinder from "./tinder";
+import IngredientTinder from "@/components/app/tinder";
 
 import {
   QueryClient,
