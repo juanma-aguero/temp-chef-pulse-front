@@ -4,14 +4,16 @@ import { Button } from "@/components/ui/button";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useTinderFeats from "./useTinder";
+import { DrawerDemo } from "../drawer";
 
 export default function IngredientTinder() {
   const queryClient = new QueryClient();
 
+  const ingredientEndpoint = `${process.env.NEXT_PUBLIC_BACK_HOST}/ingredient`;
+  console.log(ingredientEndpoint);
   const { isPending, error, data, isFetching } = useQuery({
     queryKey: ["getIngredients"],
-    queryFn: () =>
-      axios.get(`${process.env.BACK_HOST}/ingredient`).then((res) => res.data),
+    queryFn: () => axios.get(ingredientEndpoint).then((res) => res.data),
   });
 
   const {
@@ -50,6 +52,7 @@ export default function IngredientTinder() {
           </TinderCard>
         ))}
       </div>
+      <DrawerDemo />
       <div className="buttons">
         <Button disabled={!canSwipe} onClick={() => swipe("left")}>
           Swipe left!
@@ -72,6 +75,7 @@ export default function IngredientTinder() {
           Swipe a card or press a button to get Restore Card button visible!
         </h2>
       )}
+      
     </div>
   );
 }
