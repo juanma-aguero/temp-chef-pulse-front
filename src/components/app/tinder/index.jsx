@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { QueryClient, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import useTinderFeats from "./useTinder";
-import { DrawerDemo } from "../drawer";
+import { DrawerInput } from "../drawer";
+import { useDrawer } from "../drawer/useDrawer";
 
 export default function IngredientTinder() {
   const queryClient = new QueryClient();
@@ -28,9 +29,20 @@ export default function IngredientTinder() {
     goBack,
   } = useTinderFeats(data);
 
+  const { goal, isOpen, onClick, onOpen, onClose } = useDrawer();
+
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
+
+  const onDislike = () => {
+    console.log("Dislike");
+    onOpen();
+  };
+  const onSubmit = () => {
+    onClose();
+    swipe("right");
+  };
 
   return (
     <div>
@@ -52,18 +64,24 @@ export default function IngredientTinder() {
           </TinderCard>
         ))}
       </div>
-      <DrawerDemo />
+      <DrawerInput
+        goal={goal}
+        isOpen={isOpen}
+        onClick={onClick}
+        onSubmit={onSubmit}
+        onClose={onClose}
+      />
       <div className="buttons">
         <Button disabled={!canSwipe} onClick={() => swipe("left")}>
-          Swipe left!
+          Like
         </Button>
 
         <Button disabled={!canGoBack} onClick={() => goBack()}>
           Undo
         </Button>
 
-        <Button disabled={!canSwipe} onClick={() => swipe("right")}>
-          Swipe right!
+        <Button disabled={!canSwipe} onClick={() => onDislike()}>
+          Dislike
         </Button>
       </div>
       {lastDirection ? (
@@ -75,7 +93,6 @@ export default function IngredientTinder() {
           Swipe a card or press a button to get Restore Card button visible!
         </h2>
       )}
-      
     </div>
   );
 }

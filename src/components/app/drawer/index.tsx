@@ -55,18 +55,21 @@ const data = [
   },
 ];
 
-export function DrawerDemo() {
-  const [goal, setGoal] = React.useState(350);
-
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)));
-  }
-
+export function DrawerInput({
+  goal,
+  isOpen,
+  onSubmit,
+  onCancel,
+  onClick,
+}: {
+  goal: number;
+  isOpen: boolean;
+  onSubmit: () => void;
+  onCancel: () => void;
+  onClick: (adjustment: number) => void;
+}) {
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="outline">Open Drawer</Button>
-      </DrawerTrigger>
+    <Drawer open={isOpen}>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
@@ -104,14 +107,16 @@ export function DrawerDemo() {
                 <span className="sr-only">Increase</span>
               </Button>
             </div>
-            <div className="mt-3 h-[120px]">
-              Test
-            </div>
+            <div className="mt-3 h-[120px]">Test</div>
           </div>
           <DrawerFooter>
-            <Button>Submit</Button>
+            <Button size="lg" onClick={() => onSubmit()}>
+              Submit
+            </Button>
             <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button variant="outline" onClick={() => onCancel}>
+                Cancel
+              </Button>
             </DrawerClose>
           </DrawerFooter>
         </div>
