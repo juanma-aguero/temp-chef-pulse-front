@@ -65,7 +65,7 @@ export default function IngredientTinder() {
       ingredientId: data[currentIndex].id,
       chefId: 1,
       kitchenDate: "2024/03/14",
-      score: 0,
+      score: -1,
       prompt: data[currentIndex].name,
     });
     onClose();
@@ -75,6 +75,17 @@ export default function IngredientTinder() {
     }, 500);
 
   };
+  const onLike = () => {
+    reviewMutation.mutate({
+      ingredientId: data[currentIndex].id,
+      chefId: 1,
+      kitchenDate: "2024/03/14",
+      score: 1,
+      prompt: data[currentIndex].name,
+    });
+    swipe("left");
+  };
+  
   const onCancel = () => {
     onClose();
   };
@@ -127,7 +138,7 @@ export default function IngredientTinder() {
           variant="outline"
           size="lg"
           disabled={!canSwipe}
-          onClick={() => swipe("left")}
+          onClick={() => onLike()}
         >
           <ThumbsUp className="h-4 w-4" />
         </Button>
