@@ -26,7 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/pulse/page.jsx"
+    "src/app/pulse/page.tsx"
 , "src/components/app/tinder/useTinder.js"  ],
   "exclude": ["node_modules"]
 }

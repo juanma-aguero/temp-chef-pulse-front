@@ -1,9 +1,15 @@
 import React, { useMemo, useRef, useState } from "react";
 
 export default function useTinderFeats(ingredients = []) {
-  const [currentIndex, setCurrentIndex] = useState(ingredients.length - 1);
+  const [currentIndex, setCurrentIndex] = useState(
+    ingredients.length > 0 ? ingredients.length - 1 : 0
+  );
   const [lastDirection, setLastDirection] = useState("");
   const currentIndexRef = useRef(currentIndex);
+  
+  useMemo(() => {
+    setCurrentIndex(ingredients.length - 1);
+  }, [ingredients.length]);
 
   const childRefs = useMemo(
     () =>
@@ -33,6 +39,7 @@ export default function useTinderFeats(ingredients = []) {
   };
 
   const swipe = async (dir) => {
+    console.log(`swipe ${dir}`, currentIndex);
     if (canSwipe && currentIndex < ingredients.length) {
       await childRefs[currentIndex].current.swipe(dir);
     }
