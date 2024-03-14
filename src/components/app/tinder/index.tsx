@@ -69,7 +69,11 @@ export default function IngredientTinder() {
       prompt: data[currentIndex].name,
     });
     onClose();
-    swipe("right");
+    
+    setTimeout(() => {
+      swipe("right");
+    }, 500);
+
   };
   const onCancel = () => {
     onClose();
